@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { useEditTransferMutation } from './slices/apiSlice'
 import { setEditTargetId } from './slices/transferStatusSlice'
+import { TransferForm } from './TransferForm';
 
 export const EditTransferForm = (props) => {
   const { transfer } = props;
@@ -25,8 +26,6 @@ export const EditTransferForm = (props) => {
   }
 
   const onFormSubmit = async (e) => {
-    e.preventDefault()
-
     try {
       await updateTransfer({
         id: transfer.id,
@@ -35,7 +34,7 @@ export const EditTransferForm = (props) => {
         amount,
         date,
         note
-      })
+      }).unwrap();
 
       dispatch(setEditTargetId(undefined));
       setAccountHolder('')
@@ -49,48 +48,19 @@ export const EditTransferForm = (props) => {
   }
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <label htmlFor="accountHolder">Account holder</label>
-      <input
-        type="text"
-        id="accountHolder"
-        name="accountHolder"
-        value={accountHolder}
-        onChange={onAccountHolderChanged}
-      />
-      <label htmlFor="iban">IBAN</label>
-      <input
-        type="text"
-        id="iban"
-        name="iban"
-        value={iban}
-        onChange={onIbanChanged}
-      />
-      <label htmlFor="amount">Amount</label>
-      <input
-        type="text"
-        id="amount"
-        name="amount"
-        value={amount}
-        onChange={onAmountChanged}
-      />
-      <label htmlFor="accountHolder">Date</label>
-      <input
-        type="text"
-        id="date"
-        name="date"
-        value={date}
-        onChange={onDateChanged}
-      />
-      <label htmlFor="iban">Note</label>
-      <textarea
-        id="note"
-        name="note"
-        value={note}
-        onChange={onNoteChanged}
-      />
-      <button type="button" onClick={onCancelButtonClicked}>Cancel</button>
-      <button type="submit">Save transfer</button>
-    </form>
+    <TransferForm
+      accountHolder={accountHolder}
+      iban={iban}
+      amount={amount}
+      date={date}
+      note={note}
+      onAccountHolderChanged={onAccountHolderChanged}
+      onIbanChanged={onIbanChanged}
+      onAmountChanged={onAmountChanged}
+      onDateChanged={onDateChanged}
+      onNoteChanged={onNoteChanged}
+      onFormSubmit={onFormSubmit}
+      onCancelButtonClicked={onCancelButtonClicked}
+    />
   )
 }
