@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 import {
   setEditTargetId,
   setDeleteTargetId,
 } from './slices/transferStatusSlice';
 import { debounce } from '../../helpers';
+import { svg } from '../../svg';
 
 export const TransfersTable = (props) => {
-  const { transfers } = props;
-  const [preparedTransfers, setPrepareedTransfers] = useState(transfers);
-  const [sortKey, setSortKey] = useState('');
+  const [sortKey, setSortKey] = useState(undefined);
   const [isSortAscending, setIsSortAscending] = useState(true);
+  const [filterKeyword, setFilterKeyword] = useState('');
 
   const dispatch = useDispatch();
 
@@ -23,43 +23,53 @@ export const TransfersTable = (props) => {
     dispatch(setDeleteTargetId(transferId));
   }
 
-  const handleSorting = (key) => {
-    const transfersToSort = [...transfers];
-    let isAscending = isSortAscending;
+  const setFilterConfig = () => {
+    return debounce((e) => {
+      setFilterKeyword(e.target.value)
+    })
+  }
 
+  const setSortConfig = (key) => {
     if (key === sortKey) {
-      isAscending = !isAscending;
       setIsSortAscending(!isSortAscending);
     }
-
     setSortKey(key);
+  }
 
-    transfersToSort.sort((a, b) => {
-      if (a[key] < b[key]) {
-        return isAscending ? -1 : 1;
+  const sortTransfers = (draftTransfers) => {
+    return draftTransfers.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return isSortAscending ? -1 : 1;
       }
 
-      if (a[key] > b[key]) {
-        return isAscending ? 1 : -1;
+      if (a[sortKey] > b[sortKey]) {
+        return isSortAscending ? 1 : -1;
       }
 
       return 0;
     });
-
-    setPrepareedTransfers(transfersToSort);
-  }
-
-  const handleFiltering = () => {
-    return debounce((e) => {
-      const searchKeyword = e.target.value;
-      const transfersToFilter = [...transfers];
-      const filteredTransfers = transfersToFilter.filter(({accountHolder, note}) => {
-        return accountHolder.includes(searchKeyword) || note.includes(searchKeyword);
-      });
-
-      setPrepareedTransfers(filteredTransfers);
-    })
   };
+
+  const filterTransfers = (draftTransfers) => {
+    return draftTransfers.filter(({accountHolder, note}) => {
+      const lowered = filterKeyword.toLowerCase();
+      return [accountHolder, note].some((one) => (one.toLowerCase().includes(lowered)))
+    });
+  };
+
+  const getSortSvg = (key) => {
+    if (!sortKey || sortKey !== key) return svg.sort;
+
+    if (sortKey === key) {
+      if (isSortAscending) {
+        return svg.asc;
+      } else {
+        return svg.desc;
+      }
+    }
+  };
+
+  let preparedTransfers = filterTransfers(sortTransfers([...props.transfers]));
 
   const renderedTransfers = preparedTransfers.map(transfer => (
     <tr key={transfer.id}>
@@ -87,7 +97,7 @@ export const TransfersTable = (props) => {
     <>
     <input
       type="text"
-      onChange={handleFiltering()}
+      onChange={setFilterConfig()}
       placeholder="search for name or note">
     </input>
     <table>
@@ -95,8 +105,8 @@ export const TransfersTable = (props) => {
         <tr>
           <th>Account holder</th>
           <th>IBAN</th>
-          <th onClick={() => handleSorting('amount')}>Amount</th>
-          <th onClick={() => handleSorting('date')}>Date</th>
+          <th onClick={() => setSortConfig('amount')}>Amount {getSortSvg('amount')}</th>
+          <th onClick={() => setSortConfig('date')}>Date {getSortSvg('date')}</th>
           <th>Note</th>
           <th>Actions</th>
         </tr>
