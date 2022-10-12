@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatISO } from 'date-fns';
+import { parse, formatISO } from 'date-fns';
 import { useAddNewTransferMutation } from './slices/apiSlice';
 import { setAddModalVisibility } from './slices/transferStatusSlice';
 import { TransferForm } from './TransferForm';
@@ -36,7 +36,7 @@ export const AddTransferModal = () => {
         accountHolder,
         iban,
         amount,
-        date: formatISO(new Date(date)),
+        date: formatISO(parse(date, 'dd.mm.yyyy', new Date())),
         note
       }).unwrap();
 
