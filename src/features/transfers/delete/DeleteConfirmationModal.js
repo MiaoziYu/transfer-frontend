@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useDeleteTransferMutation } from './slices/apiSlice'
-import { setDeleteTargetId } from './slices/transferStatusSlice'
+import { useDeleteTransferMutation } from '../slices/apiSlice'
+import { setDeleteTargetId } from '../slices/statusSlice'
 
 export const DeleteConfirmationModal = () => {
   const transferId = useSelector(state => state.transferStatus.deleteTargetId);
+  const deleteTargetId = useSelector(state => state.transferStatus.deleteTargetId);
   const dispatch = useDispatch();
   const [deleteTransfer] = useDeleteTransferMutation()
 
@@ -21,10 +22,12 @@ export const DeleteConfirmationModal = () => {
   };
 
   return (
-    <section>
-      <h2>Are you sure you want to delete this transfer</h2>
-      <button type="button" onClick={onCancelButtonClicked}>Cancel</button>
-      <button type="button" onClick={onDeleteButtonClicked}>Delete</button>
-    </section>
+    <>
+      {deleteTargetId && <section className="card">
+        <h2>Are you sure you want to delete this transfer</h2>
+        <button type="button" onClick={onCancelButtonClicked}>Cancel</button>
+        <button type="button" onClick={onDeleteButtonClicked}>Delete</button>
+      </section>}
+    </>
   )
 }

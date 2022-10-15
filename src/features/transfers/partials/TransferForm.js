@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { isValid, parse, isPast } from 'date-fns';
 import IBAN from 'iban';
-import Input from '../../components/Input';
-import Textarea from '../../components/Textarea';
+import Input from '../../../components/Input';
+import Textarea from '../../../components/Textarea';
+import { parseGermanDate } from '../../../helpers';
 
 export const TransferForm = (props) => {
   const {
@@ -33,9 +34,10 @@ export const TransferForm = (props) => {
       errors.amount = 'Invalid amount format';
     }
 
-    if (!isValid(parse(date, 'dd.mm.yyyy', new Date()))) {
+    const parsedDate = parseGermanDate(date);
+    if (!isValid(parsedDate)) {
       errors.date = 'Invalid date, use German date format dd.mm.yyyy';
-    } else if (isPast(new Date(date))) {
+    } else if (isPast(parsedDate)) {
       errors.date = 'Date must be in the future';
     }
 
@@ -60,7 +62,6 @@ export const TransferForm = (props) => {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <h2>Add a new transfer</h2>
       <label htmlFor="accountHolder">Account holder</label>
       <Input
         id="accountHolder"

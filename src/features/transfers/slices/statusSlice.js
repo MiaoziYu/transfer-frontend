@@ -7,7 +7,7 @@ const initialState = {
 }
 
 // reducers
-const transferStatusSlice = createSlice({
+const statusSlice = createSlice({
   name: 'transferStatus',
   initialState,
   reducers: {
@@ -33,6 +33,6 @@ export const {
   setEditTargetId,
   setDeleteTargetId,
   setAddModalVisibility,
-} = transferStatusSlice.actions;
+} = statusSlice.actions;
 
-export default transferStatusSlice.reducer;
+export default statusSlice.reducer;

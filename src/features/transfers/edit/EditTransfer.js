@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux'
-import { useEditTransferMutation } from './slices/apiSlice'
-import { setEditTargetId } from './slices/transferStatusSlice'
-import { TransferForm } from './TransferForm';
+import { useDispatch } from 'react-redux';
+import { format } from 'date-fns';
+import { useEditTransferMutation } from '../slices/apiSlice'
+import { setEditTargetId } from '../slices/statusSlice'
+import { TransferForm } from '../partials/TransferForm';
 
-export const EditTransferForm = (props) => {
+export const EditTransfer = (props) => {
   const { transfer } = props;
   const [accountHolder, setAccountHolder] = useState(transfer.accountHolder);
   const [iban, setIban] = useState(transfer.iban);
   const [amount, setAmount] = useState(transfer.amount);
-  const [date, setDate] = useState(transfer.date);
+  const [date, setDate] = useState(format(Date.parse(transfer.date), 'dd.MM.yyyy'));
   const [note, setNote] = useState(transfer.note);
 
   const dispatch = useDispatch();
@@ -48,19 +49,20 @@ export const EditTransferForm = (props) => {
   }
 
   return (
-    <TransferForm
-      accountHolder={accountHolder}
-      iban={iban}
-      amount={amount}
-      date={date}
-      note={note}
-      onAccountHolderChanged={onAccountHolderChanged}
-      onIbanChanged={onIbanChanged}
-      onAmountChanged={onAmountChanged}
-      onDateChanged={onDateChanged}
-      onNoteChanged={onNoteChanged}
-      onFormSubmit={onFormSubmit}
-      onCancelButtonClicked={onCancelButtonClicked}
-    />
-  )
-}
+    <>
+      <h2>Edit transfer</h2>
+      <TransferForm
+        accountHolder={accountHolder}
+        iban={iban}
+        amount={amount}
+        date={date}
+        note={note}
+        onAccountHolderChanged={onAccountHolderChanged}
+        onIbanChanged={onIbanChanged}
+        onAmountChanged={onAmountChanged}
+        onDateChanged={onDateChanged}
+        onNoteChanged={onNoteChanged}
+        formAction={onFormSubmit}
+        onCancelButtonClicked={onCancelButtonClicked} />
+    </>
+  )}

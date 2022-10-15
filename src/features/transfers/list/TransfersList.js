@@ -4,11 +4,11 @@ import { format } from 'date-fns';
 import {
   setEditTargetId,
   setDeleteTargetId,
-} from './slices/transferStatusSlice';
-import { debounce } from '../../helpers';
-import { svg } from '../../svg';
+} from '../slices/statusSlice';
+import { svg } from '../../../svg';
+import { SearchInput } from './SearchInput';
 
-export const TransfersTable = (props) => {
+export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);
   const [isSortAscending, setIsSortAscending] = useState(true);
   const [filterKeyword, setFilterKeyword] = useState('');
@@ -23,10 +23,8 @@ export const TransfersTable = (props) => {
     dispatch(setDeleteTargetId(transferId));
   }
 
-  const setFilterConfig = () => {
-    return debounce((e) => {
-      setFilterKeyword(e.target.value)
-    })
+  const setFilterConfig = (value) => {
+    setFilterKeyword(value)
   }
 
   const setSortConfig = (key) => {
@@ -84,37 +82,33 @@ export const TransfersTable = (props) => {
         <button
           type="button"
           onClick={() => onEditButtonClicked(transfer.id)}>
-            edit
+            {svg.edit}
         </button>
         <button
           type="button"
-          onClick={() => onDeleteButtonClicked(transfer.id)}>delete</button>
+          onClick={() => onDeleteButtonClicked(transfer.id)}>{svg.delete}</button>
       </td>
     </tr>
   ))
 
   return (
     <>
-    <input
-      type="text"
-      onChange={setFilterConfig()}
-      placeholder="search for name or note">
-    </input>
-    <table>
-      <thead>
-        <tr>
-          <th>Account holder</th>
-          <th>IBAN</th>
-          <th onClick={() => setSortConfig('amount')}>Amount {getSortSvg('amount')}</th>
-          <th onClick={() => setSortConfig('date')}>Date {getSortSvg('date')}</th>
-          <th>Note</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {renderedTransfers}
-      </tbody>
-  </table>
+      <SearchInput onChange={setFilterConfig} />
+      <table>
+        <thead>
+          <tr>
+            <th>Account holder</th>
+            <th>IBAN</th>
+            <th onClick={() => setSortConfig('amount')}>Amount {getSortSvg('amount')}</th>
+            <th onClick={() => setSortConfig('date')}>Date {getSortSvg('date')}</th>
+            <th>Note</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderedTransfers}
+        </tbody>
+    </table>
   </>
   )
 }

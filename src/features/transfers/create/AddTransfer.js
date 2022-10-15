@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { parse, formatISO } from 'date-fns';
-import { useAddNewTransferMutation } from './slices/apiSlice';
-import { setAddModalVisibility } from './slices/transferStatusSlice';
-import { TransferForm } from './TransferForm';
+import { formatISO } from 'date-fns';
+import { useAddNewTransferMutation } from '../slices/apiSlice';
+import { setAddModalVisibility } from '../slices/statusSlice';
+import { TransferForm } from '../partials/TransferForm';
+import { parseGermanDate } from '../../../helpers';
 
-export const AddTransferModal = () => {
+export const AddTransfer = () => {
   const [accountHolder, setAccountHolder] = useState('');
   const [iban, setIban] = useState('');
   const [amount, setAmount] = useState('');
@@ -22,10 +23,6 @@ export const AddTransferModal = () => {
   const onDateChanged = e => setDate(e.target.value);
   const onNoteChanged = e => setNote(e.target.value);
 
-  const onAddButtonClicked = () => {
-    dispatch(setAddModalVisibility(true));
-  }
-
   const onCancelButtonClicked = () => {
     dispatch(setAddModalVisibility(false));
   }
@@ -36,7 +33,7 @@ export const AddTransferModal = () => {
         accountHolder,
         iban,
         amount,
-        date: formatISO(parse(date, 'dd.mm.yyyy', new Date())),
+        date: formatISO(parseGermanDate(date)),
         note
       }).unwrap();
 
@@ -51,32 +48,25 @@ export const AddTransferModal = () => {
     }
   }
 
-  let content;
-
-  if (isVisible) {
-    content = <TransferForm
-      accountHolder={accountHolder}
-      iban={iban}
-      amount={amount}
-      date={date}
-      note={note}
-      onAccountHolderChanged={onAccountHolderChanged}
-      onIbanChanged={onIbanChanged}
-      onAmountChanged={onAmountChanged}
-      onDateChanged={onDateChanged}
-      onNoteChanged={onNoteChanged}
-      formAction={onFormSubmit}
-      onCancelButtonClicked={onCancelButtonClicked}
-    />;
-  }
-
   return (
-    <section>
-      <button
-        type="button" onClick={onAddButtonClicked}>
-          Add new transfer
-      </button>
-      {content}
-    </section>
+    <>
+      {isVisible && <section className="card">
+        <h2>Add new transfer</h2>
+        <TransferForm
+          accountHolder={accountHolder}
+          iban={iban}
+          amount={amount}
+          date={date}
+          note={note}
+          onAccountHolderChanged={onAccountHolderChanged}
+          onIbanChanged={onIbanChanged}
+          onAmountChanged={onAmountChanged}
+          onDateChanged={onDateChanged}
+          onNoteChanged={onNoteChanged}
+          formAction={onFormSubmit}
+          onCancelButtonClicked={onCancelButtonClicked}
+        />
+    </section>}
+    </>
   )
 }
