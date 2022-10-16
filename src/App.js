@@ -3,7 +3,7 @@ import { TransfersListContainer } from './features/transfers/list/TransfersListC
 import { AddTransfer } from './features/transfers/create/AddTransfer';
 import { EditTransferContainer } from './features/transfers/edit/EditTransferContainer';
 import { DeleteConfirmationModal } from './features/transfers/delete/DeleteConfirmationModal';
-import { AddTransferButton } from './features/transfers/create/AddTransferButton';
+import Notification from './components/Notification';
 import './App.css';
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
       <AddTransfer />
       <EditTransferContainer />
       <DeleteConfirmationModal />
+      <Notification />
     </React.Fragment>
   );
 }

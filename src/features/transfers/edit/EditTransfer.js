@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { format, formatISO } from 'date-fns';
 import { useEditTransferMutation } from '../slices/apiSlice'
-import { setEditTargetId } from '../slices/statusSlice'
+import { setEditTargetId, setNotification } from '../slices/statusSlice'
 import { TransferForm } from '../partials/TransferForm';
 import { parseGermanDate, toogleBackground } from '../../../helpers';
 
@@ -23,7 +23,7 @@ export const EditTransfer = (props) => {
   const onDateChanged = e => setDate(e.target.value);
   const onNoteChanged = e => setNote(e.target.value);
 
-  const onCancelButtonClicked = () => {
+  const closeModal = () => {
     dispatch(setEditTargetId(undefined));
     toogleBackground();
   }
@@ -39,35 +39,33 @@ export const EditTransfer = (props) => {
         note
       }).unwrap();
 
-      dispatch(setEditTargetId(undefined));
-      toogleBackground();
-      setAccountHolder('');
-      setIban('');
-      setAmount('');
-      setDate('');
-      setNote('');
-    } catch (err) {
-      console.error('Failed to update the transfer: ', err)
+      closeModal();
+      dispatch(setNotification({
+        status: 'success',
+        message: 'Transfer updated'
+      }));
+    } catch (error) {
+      console.log('error')
+      closeModal();
+      dispatch(setNotification({
+        status: 'error',
+        message: 'Failed to update transfer'
+      }));
     }
   }
 
   return (
-    <div className="modal__dialog card">
-      <div className="modal__header">
-        <h2>Edit transfer</h2>
-      </div>
-      <TransferForm
-        accountHolder={accountHolder}
-        iban={iban}
-        amount={amount}
-        date={date}
-        note={note}
-        onAccountHolderChanged={onAccountHolderChanged}
-        onIbanChanged={onIbanChanged}
-        onAmountChanged={onAmountChanged}
-        onDateChanged={onDateChanged}
-        onNoteChanged={onNoteChanged}
-        formAction={onFormSubmit}
-        onCancelButtonClicked={onCancelButtonClicked} />
-    </div>
+    <TransferForm
+      accountHolder={accountHolder}
+      iban={iban}
+      amount={amount}
+      date={date}
+      note={note}
+      onAccountHolderChanged={onAccountHolderChanged}
+      onIbanChanged={onIbanChanged}
+      onAmountChanged={onAmountChanged}
+      onDateChanged={onDateChanged}
+      onNoteChanged={onNoteChanged}
+      formAction={onFormSubmit}
+      onCancelButtonClicked={closeModal} />
   )}

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toogleBackground } from '../../../helpers';
 import { useDeleteTransferMutation } from '../slices/apiSlice'
-import { setDeleteTargetId } from '../slices/statusSlice'
+import { setDeleteTargetId, setNotification } from '../slices/statusSlice'
 
 export const DeleteConfirmationModal = () => {
   const transferId = useSelector(state => state.transferStatus.deleteTargetId);
@@ -9,18 +9,26 @@ export const DeleteConfirmationModal = () => {
   const dispatch = useDispatch();
   const [deleteTransfer] = useDeleteTransferMutation()
 
-  const onCancelButtonClicked = () => {
+  const closeModal = () => {
     dispatch(setDeleteTargetId(undefined));
     toogleBackground();
-  };
+  }
 
   const onDeleteButtonClicked = async () => {
     try {
-      await deleteTransfer(transferId);
-      dispatch(setDeleteTargetId(undefined));
-      toogleBackground();
-    } catch (err) {
-      console.error('Failed to delete transfer: ', err);
+      await deleteTransfer(transferId).unwrap();;
+      closeModal();
+      dispatch(setNotification({
+        status: 'success',
+        message: 'Transfer deleted'
+      }));
+    } catch (error) {
+      console.log('error')
+      closeModal();
+      dispatch(setNotification({
+        status: 'error',
+        message: 'Failed to delete transfer'
+      }));
     }
   };
 
@@ -33,7 +41,7 @@ export const DeleteConfirmationModal = () => {
           </div>
           <div className="modal__footer">
             <button type="button"
-              onClick={onCancelButtonClicked}
+              onClick={closeModal}
               className="btn-grey">
               Cancel
             </button>
@@ -45,7 +53,6 @@ export const DeleteConfirmationModal = () => {
             </button>
           </div>
         </div>
-
       </section>}
     </>
   )

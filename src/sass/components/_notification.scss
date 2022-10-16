@@ -1,0 +1,35 @@
+.notification {
+  position: fixed;
+  top: -50px;
+  right: 0;
+  padding: 0.625rem;
+  color: $white;
+  font-size: 0.875rem;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  &.error,
+  &.success {
+    top: 0;
+    opacity: 0.9;
+    transition: all ease-in 0.5s;
+  }
+
+  &.error {
+    background-color: $red;
+  }
+
+  &.success {
+    background-color: $green;
+  }
+
+  svg,
+  span {
+    vertical-align: middle;
+  }
+
+  svg {
+    fill: $white;
+  }
+}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatISO } from 'date-fns';
 import { useAddNewTransferMutation } from '../slices/apiSlice';
-import { setAddModalVisibility } from '../slices/statusSlice';
+import { setAddModalVisibility, setNotification } from '../slices/statusSlice';
 import { TransferForm } from '../partials/TransferForm';
 import { parseGermanDate, toogleBackground } from '../../../helpers';
 
@@ -23,18 +23,18 @@ export const AddTransfer = () => {
   const onDateChanged = e => setDate(e.target.value);
   const onNoteChanged = e => setNote(e.target.value);
 
-  const emptyFormInput = () => {
+  const closeModal = () => {
     setAccountHolder('');
     setIban('');
     setAmount('');
     setDate('');
     setNote('');
+    dispatch(setAddModalVisibility(false));
+    toogleBackground();
   }
 
   const onCancelButtonClicked = () => {
-    dispatch(setAddModalVisibility(false));
-    toogleBackground();
-    emptyFormInput();
+    closeModal();
   }
 
   const onFormSubmit = async (e) => {
@@ -47,11 +47,18 @@ export const AddTransfer = () => {
         note
       }).unwrap();
 
-      dispatch(setAddModalVisibility(false));
-      emptyFormInput();
-      toogleBackground();
-    } catch (err) {
-      console.error('Failed to save transfer: ', err);
+      closeModal();
+      dispatch(setNotification({
+        status: 'success',
+        message: 'Transfer created'
+      }));
+    } catch (error) {
+      console.log(error);
+      closeModal();
+      dispatch(setNotification({
+        status: 'error',
+        message: 'Failed to save transfer'
+      }));
     }
   }
 

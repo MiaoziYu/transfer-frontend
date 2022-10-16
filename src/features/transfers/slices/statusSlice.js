@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   editTargetId: undefined,
   deleteTargetId: undefined,
-  isAddModalVisible: false
+  isAddModalVisible: false,
+  notification: {
+    status: '',
+    message: '',
+  },
 }
 
 // reducers
@@ -25,6 +29,9 @@ const statusSlice = createSlice({
     setAddModalVisibility(state, action) {
       state.isAddModalVisible = action.payload;
     },
+    setNotification(state, action) {
+      state.notification = action.payload;
+    },
   }
 })
 
@@ -33,6 +40,7 @@ export const {
   setEditTargetId,
   setDeleteTargetId,
   setAddModalVisibility,
+  setNotification,
 } = statusSlice.actions;
 
 export default statusSlice.reducer;

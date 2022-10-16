@@ -21,7 +21,13 @@ export const TransfersListContainer = (props) => {
   } else if (isSuccess) {
     content = <TransfersList transfers={transfers} />
   } else if (isError) {
-    content = <div>{error.toString()}</div>
+    console.log(error)
+    content = (
+      <>
+        <h2>Cannot fetch transfers from server</h2>
+        <div>Status code: {error.originalStatus}</div>
+      </>
+    )
   }
 
   return (

@@ -503,7 +503,7 @@ h6 {
 main {
   margin-top: -1rem;
   margin-bottom: 2rem;
-  min-height: 200px;
+  min-height: 400px;
 }
 @media screen and (min-width: 1030px) {
   main {
@@ -707,6 +707,36 @@ form .form__error {
   margin: 0.1rem 0 0.3rem 0;
   color: #D01F2E;
   font-size: 0.875rem;
+}
+
+.notification {
+  position: fixed;
+  top: -50px;
+  right: 0;
+  padding: 0.625rem;
+  color: #FFFFFB;
+  font-size: 0.875rem;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.notification.error, .notification.success {
+  top: 0;
+  opacity: 0.9;
+  transition: all ease-in 0.5s;
+}
+.notification.error {
+  background-color: #D01F2E;
+}
+.notification.success {
+  background-color: #3DCC3D;
+}
+.notification svg,
+.notification span {
+  vertical-align: middle;
+}
+.notification svg {
+  fill: #FFFFFB;
 }
 
 /*# sourceMappingURL=index.css.map */
