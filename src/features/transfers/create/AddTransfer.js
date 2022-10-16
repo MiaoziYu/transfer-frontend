@@ -33,10 +33,6 @@ export const AddTransfer = () => {
     toogleBackground();
   }
 
-  const onCancelButtonClicked = () => {
-    closeModal();
-  }
-
   const onFormSubmit = async (e) => {
     try {
       await addNewTransfer({
@@ -81,7 +77,7 @@ export const AddTransfer = () => {
             onDateChanged={onDateChanged}
             onNoteChanged={onNoteChanged}
             formAction={onFormSubmit}
-            onCancelButtonClicked={onCancelButtonClicked}
+            onCancelButtonClicked={closeModal}
           />
         </div>
     </section>}
