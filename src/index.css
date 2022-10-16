@@ -515,6 +515,8 @@ main {
 header {
   padding: 2rem 0;
   background-color: #3d474d;
+  background-image: url("/public/hero.jpg");
+  background-size: cover;
   color: #FFFFFB;
 }
 @media screen and (min-width: 1030px) {

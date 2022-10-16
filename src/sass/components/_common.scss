@@ -12,6 +12,8 @@ main {
 header {
   padding: 2rem 0;
   background-color: $black;
+  background-image: url("/public/hero.jpg");
+  background-size: cover;
   color: $white;
 
   @media screen and (min-width: $breakpoint-m) {
