@@ -34,6 +34,8 @@ export const TransfersList = (props) => {
   const setSortConfig = (key) => {
     if (key === sortKey) {
       setIsSortAscending(!isSortAscending);
+    } else {
+      setIsSortAscending(false);
     }
     setSortKey(key);
   }
