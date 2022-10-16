@@ -12,7 +12,7 @@ const Input = props => {
         onChange={onChange}
         required={required}
       />
-      <p>{error}</p>
+      <p className="form__error">{error}</p>
     </>
   )
 };

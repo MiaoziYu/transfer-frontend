@@ -1,10 +1,13 @@
 @import "base/normalize";
 @import "base/reset";
-@import "base/typography";
 @import "base/colors";
+@import "base/typography";
 @import "base/breakpoints";
 
+@import "helpers/mixins";
 @import "helpers/utilities";
 
-@import "pages/common";
-@import "pages/transfer";
+@import "components/common";
+@import "components/table";
+@import "components/modal";
+@import "components/form";

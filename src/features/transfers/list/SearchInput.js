@@ -10,8 +10,9 @@ export const SearchInput = (props) => {
   return (
     <input
       type="text"
+      className="search-input"
       onChange={handleSearch()}
-      placeholder="search for name or note">
+      placeholder="Search for account holder or note">
     </input>
   )
 }

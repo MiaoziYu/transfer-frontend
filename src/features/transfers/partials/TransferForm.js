@@ -30,13 +30,13 @@ export const TransferForm = (props) => {
       errors.iban = 'Invalid IBAN number';
     }
 
-    if (!amount.match(/^\d{1,3}(?:\.?\d{3})*(?:,\d{1,2})?$/)) {
+    if (!String(amount).match(/^\d{1,3}(?:\.?\d{3})*(?:,\d{1,2})?$/)) {
       errors.amount = 'Invalid amount format';
     }
 
     const parsedDate = parseGermanDate(date);
     if (!isValid(parsedDate)) {
-      errors.date = 'Invalid date, use German date format dd.mm.yyyy';
+      errors.date = 'Invalid date, use german date format dd.mm.yyyy';
     } else if (isPast(parsedDate)) {
       errors.date = 'Date must be in the future';
     }
@@ -61,7 +61,8 @@ export const TransferForm = (props) => {
   }
 
   return (
-    <form onSubmit={onFormSubmit}>
+    <>
+    <form>
       <label htmlFor="accountHolder">Account holder</label>
       <Input
         id="accountHolder"
@@ -88,7 +89,7 @@ export const TransferForm = (props) => {
         required
         error={formErrors.amount}
       />
-      <label htmlFor="accountHolder">Date</label>
+      <label htmlFor="date">Date</label>
       <Input
         id="date"
         name="date"
@@ -98,7 +99,7 @@ export const TransferForm = (props) => {
         required
         error={formErrors.date}
       />
-      <label htmlFor="iban">Note</label>
+      <label htmlFor="note">Note</label>
       <Textarea
         id="note"
         name="note"
@@ -106,8 +107,21 @@ export const TransferForm = (props) => {
         onChange={onNoteChanged}
         error={formErrors.note}
       />
-      <button type="button" onClick={onCancelButtonClicked}>Cancel</button>
-      <button type="submit">Save transfer</button>
     </form>
+    <div className="modal__footer">
+      <button
+        type="button"
+        onClick={onCancelButtonClicked}
+        className="btn-grey">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        onClick={onFormSubmit}
+        className="btn-green">
+        Save
+      </button>
+    </div>
+  </>
   )
 }

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { toogleBackground } from '../../../helpers';
 import { useDeleteTransferMutation } from '../slices/apiSlice'
 import { setDeleteTargetId } from '../slices/statusSlice'
 
@@ -10,12 +11,14 @@ export const DeleteConfirmationModal = () => {
 
   const onCancelButtonClicked = () => {
     dispatch(setDeleteTargetId(undefined));
+    toogleBackground();
   };
 
   const onDeleteButtonClicked = async () => {
     try {
       await deleteTransfer(transferId);
       dispatch(setDeleteTargetId(undefined));
+      toogleBackground();
     } catch (err) {
       console.error('Failed to delete transfer: ', err);
     }
@@ -23,10 +26,26 @@ export const DeleteConfirmationModal = () => {
 
   return (
     <>
-      {deleteTargetId && <section className="card">
-        <h2>Are you sure you want to delete this transfer</h2>
-        <button type="button" onClick={onCancelButtonClicked}>Cancel</button>
-        <button type="button" onClick={onDeleteButtonClicked}>Delete</button>
+      {deleteTargetId && <section className="modal">
+        <div className="modal__dialog card">
+          <div className="modal__header">
+            <h2>Delete this transfer?</h2>
+          </div>
+          <div className="modal__footer">
+            <button type="button"
+              onClick={onCancelButtonClicked}
+              className="btn-grey">
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={onDeleteButtonClicked}
+              className="btn-red">
+              Delete
+            </button>
+          </div>
+        </div>
+
       </section>}
     </>
   )

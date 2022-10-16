@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 import { useAddNewTransferMutation } from '../slices/apiSlice';
 import { setAddModalVisibility } from '../slices/statusSlice';
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate } from '../../../helpers';
+import { parseGermanDate, toogleBackground } from '../../../helpers';
 
 export const AddTransfer = () => {
   const [accountHolder, setAccountHolder] = useState('');
@@ -23,8 +23,18 @@ export const AddTransfer = () => {
   const onDateChanged = e => setDate(e.target.value);
   const onNoteChanged = e => setNote(e.target.value);
 
+  const emptyFormInput = () => {
+    setAccountHolder('');
+    setIban('');
+    setAmount('');
+    setDate('');
+    setNote('');
+  }
+
   const onCancelButtonClicked = () => {
     dispatch(setAddModalVisibility(false));
+    toogleBackground();
+    emptyFormInput();
   }
 
   const onFormSubmit = async (e) => {
@@ -38,11 +48,8 @@ export const AddTransfer = () => {
       }).unwrap();
 
       dispatch(setAddModalVisibility(false));
-      setAccountHolder('');
-      setIban('');
-      setAmount('');
-      setDate('');
-      setNote('');
+      emptyFormInput();
+      toogleBackground();
     } catch (err) {
       console.error('Failed to save transfer: ', err);
     }
@@ -50,22 +57,26 @@ export const AddTransfer = () => {
 
   return (
     <>
-      {isVisible && <section className="card">
-        <h2>Add new transfer</h2>
-        <TransferForm
-          accountHolder={accountHolder}
-          iban={iban}
-          amount={amount}
-          date={date}
-          note={note}
-          onAccountHolderChanged={onAccountHolderChanged}
-          onIbanChanged={onIbanChanged}
-          onAmountChanged={onAmountChanged}
-          onDateChanged={onDateChanged}
-          onNoteChanged={onNoteChanged}
-          formAction={onFormSubmit}
-          onCancelButtonClicked={onCancelButtonClicked}
-        />
+      {isVisible && <section className="modal">
+        <div className="modal__dialog card">
+          <div className="modal__header">
+            <h2>Add new transfer</h2>
+          </div>
+          <TransferForm
+            accountHolder={accountHolder}
+            iban={iban}
+            amount={amount}
+            date={date}
+            note={note}
+            onAccountHolderChanged={onAccountHolderChanged}
+            onIbanChanged={onIbanChanged}
+            onAmountChanged={onAmountChanged}
+            onDateChanged={onDateChanged}
+            onNoteChanged={onNoteChanged}
+            formAction={onFormSubmit}
+            onCancelButtonClicked={onCancelButtonClicked}
+          />
+        </div>
     </section>}
     </>
   )

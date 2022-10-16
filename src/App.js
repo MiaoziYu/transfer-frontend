@@ -12,7 +12,6 @@ function App() {
     <React.Fragment>
       <TransfersListContainer />
       <AddTransfer />
-      <AddTransferButton />
       <EditTransferContainer />
       <DeleteConfirmationModal />
     </React.Fragment>

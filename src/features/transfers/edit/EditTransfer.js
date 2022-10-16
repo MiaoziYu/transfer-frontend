@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { useEditTransferMutation } from '../slices/apiSlice'
 import { setEditTargetId } from '../slices/statusSlice'
 import { TransferForm } from '../partials/TransferForm';
+import { parseGermanDate, toogleBackground } from '../../../helpers';
 
 export const EditTransfer = (props) => {
   const { transfer } = props;
@@ -24,6 +25,7 @@ export const EditTransfer = (props) => {
 
   const onCancelButtonClicked = () => {
     dispatch(setEditTargetId(undefined));
+    toogleBackground();
   }
 
   const onFormSubmit = async (e) => {
@@ -33,24 +35,27 @@ export const EditTransfer = (props) => {
         accountHolder,
         iban,
         amount,
-        date,
+        date: formatISO(parseGermanDate(date)),
         note
       }).unwrap();
 
       dispatch(setEditTargetId(undefined));
-      setAccountHolder('')
-      setIban('')
-      setAmount('')
-      setDate('')
-      setNote('')
+      toogleBackground();
+      setAccountHolder('');
+      setIban('');
+      setAmount('');
+      setDate('');
+      setNote('');
     } catch (err) {
       console.error('Failed to update the transfer: ', err)
     }
   }
 
   return (
-    <>
-      <h2>Edit transfer</h2>
+    <div className="modal__dialog card">
+      <div className="modal__header">
+        <h2>Edit transfer</h2>
+      </div>
       <TransferForm
         accountHolder={accountHolder}
         iban={iban}
@@ -64,5 +69,5 @@ export const EditTransfer = (props) => {
         onNoteChanged={onNoteChanged}
         formAction={onFormSubmit}
         onCancelButtonClicked={onCancelButtonClicked} />
-    </>
+    </div>
   )}

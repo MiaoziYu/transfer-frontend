@@ -1,0 +1,42 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  // opacity: 0;
+  transition: opacity .15s linear;
+
+  .modal__dialog {
+    width: 600px;
+    margin: 6rem auto;
+    padding: 1rem;
+    opacity: 1;
+    transition: transform .3s ease-out,-webkit-transform .3s ease-out,-o-transform .3s ease-out;
+
+    .modal__header {
+      padding: 0 1rem 1rem 1rem;
+      border-bottom: 1px solid $border-color;
+      margin: 0 -1rem 1rem -1rem;
+    }
+
+    .modal__footer {
+      margin-top: 1rem;
+      text-align: right;
+
+      button {
+        margin-left: 0.625rem;
+      }
+    }
+  }
+}
+
+.modal--open {
+  overflow: hidden;
+}

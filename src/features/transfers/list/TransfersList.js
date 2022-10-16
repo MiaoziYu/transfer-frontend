@@ -7,20 +7,24 @@ import {
 } from '../slices/statusSlice';
 import { svg } from '../../../svg';
 import { SearchInput } from './SearchInput';
+import { AddTransferButton } from '../create/AddTransferButton';
+import { toogleBackground } from '../../../helpers';
 
 export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);
-  const [isSortAscending, setIsSortAscending] = useState(true);
+  const [isSortAscending, setIsSortAscending] = useState(false);
   const [filterKeyword, setFilterKeyword] = useState('');
 
   const dispatch = useDispatch();
 
   const onEditButtonClicked = (transferId) => {
     dispatch(setEditTargetId(transferId));
+    toogleBackground();
   }
 
   const onDeleteButtonClicked = (transferId) => {
     dispatch(setDeleteTargetId(transferId));
+    toogleBackground();
   }
 
   const setFilterConfig = (value) => {
@@ -77,30 +81,50 @@ export const TransfersList = (props) => {
       <td>
         {Date.parse(transfer.date) ? format(Date.parse(transfer.date), 'dd.MM.yyyy') : ''}
         </td>
-      <td>{transfer.note.substring(0, 50)}</td>
       <td>
+        {transfer.note.substring(0, 20)}
+        {transfer.note.length > 20 ? "..." : ""}
+      </td>
+      <td className="table__actions">
         <button
           type="button"
-          onClick={() => onEditButtonClicked(transfer.id)}>
+          onClick={() => onEditButtonClicked(transfer.id)}
+          className="edit-btn">
             {svg.edit}
         </button>
         <button
           type="button"
-          onClick={() => onDeleteButtonClicked(transfer.id)}>{svg.delete}</button>
+          onClick={() => onDeleteButtonClicked(transfer.id)}
+          className="edit-btn">
+          {svg.delete}
+        </button>
       </td>
     </tr>
   ))
 
   return (
     <>
-      <SearchInput onChange={setFilterConfig} />
+      <div className="search-input-wrapper">
+        <SearchInput onChange={setFilterConfig} />
+        <AddTransferButton />
+      </div>
       <table>
         <thead>
           <tr>
             <th>Account holder</th>
             <th>IBAN</th>
-            <th onClick={() => setSortConfig('amount')}>Amount {getSortSvg('amount')}</th>
-            <th onClick={() => setSortConfig('date')}>Date {getSortSvg('date')}</th>
+            <th
+              onClick={() => setSortConfig('amount')}
+              className="sort-btn">
+                <span>Amount</span>
+                {getSortSvg('amount')}
+              </th>
+            <th
+              onClick={() => setSortConfig('date')}
+              className="sort-btn">
+              <span>Date</span>
+              {getSortSvg('date')}
+            </th>
             <th>Note</th>
             <th></th>
           </tr>

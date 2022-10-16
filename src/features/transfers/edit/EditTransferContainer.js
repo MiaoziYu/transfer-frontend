@@ -22,7 +22,7 @@ export const EditTransferContainer = () => {
 
   return (
     <>
-      {editTargetId && <section className="card">
+      {editTargetId && <section className="modal">
         {content}
       </section>}
     </>

@@ -11,3 +11,8 @@ export const debounce = (func, timeout = 300) => {
 export const parseGermanDate = (date) => {
   return parse(date, 'dd.MM.yyyy', new Date());
 }
+
+export const toogleBackground = () => {
+  const body = document.querySelector('body');
+  body.classList.toggle('modal--open');
+}

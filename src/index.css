@@ -364,16 +364,20 @@ fieldset {
   margin: 0;
 }
 
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
 html {
-  font-size: 1px; /*for using REM units*/
+  font-size: 16px; /*for using REM units*/
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 16rem;
   font-weight: 400;
   line-height: 1.3;
-  color: #222;
+  color: #3d474d;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -381,48 +385,328 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1.17em;
+  font-size: 1.17rem;
 }
 
 h4 {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 h5 {
-  font-size: 0.83em;
+  font-size: 0.83rem;
 }
 
 h6 {
-  font-size: 0.67em;
+  font-size: 0.67rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.mr-1 {
+  margin-right: 1rem;
 }
 
 .card {
-  padding: 20px;
+  padding: 0.625rem;
   box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(51, 65, 85, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.05) 0px 8px 10px -6px;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #FFF;
+}
+@media screen and (min-width: 1030px) {
+  .card {
+    padding: 1rem;
+  }
+}
+
+.container {
+  max-width: 1000px;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+@media screen and (min-width: 1030px) {
+  .container {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+.btn-yellow {
+  min-width: 80px;
+  padding: 0.625rem;
+  border-radius: 4px;
+  background-color: #ffaa00;
+  color: #FFFFFB;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: background-color 0.5s;
+}
+.btn-yellow:hover {
+  background-color: #cc8800;
+}
+
+.btn-green {
+  min-width: 80px;
+  padding: 0.625rem;
+  border-radius: 4px;
+  background-color: #3DCC3D;
+  color: #FFFFFB;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: background-color 0.5s;
+}
+.btn-green:hover {
+  background-color: #2da92d;
+}
+
+.btn-grey {
+  min-width: 80px;
+  padding: 0.625rem;
+  border-radius: 4px;
+  background-color: #8a9499;
+  color: #FFFFFB;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: background-color 0.5s;
+}
+.btn-grey:hover {
+  background-color: #707b80;
+}
+
+.btn-red {
+  min-width: 80px;
+  padding: 0.625rem;
+  border-radius: 4px;
+  background-color: #D01F2E;
+  color: #FFFFFB;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: background-color 0.5s;
+}
+.btn-red:hover {
+  background-color: #a41824;
 }
 
 .hidden {
   display: none;
 }
 
-.container {
-  width: 1000px;
-  margin: 40rem auto;
+main {
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  min-height: 200px;
+}
+@media screen and (min-width: 1030px) {
+  main {
+    margin-top: -2rem;
+    margin-bottom: 4rem;
+  }
+}
+
+header {
+  padding: 2rem 0;
+  background-color: #3d474d;
+  color: #FFFFFB;
+}
+@media screen and (min-width: 1030px) {
+  header {
+    padding: 5rem 0;
+  }
 }
 
 svg {
-  width: 15px;
-  height: 15px;
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: #3d474d;
+  transition: fill 0.5s;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.search-input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  flex-grow: 1;
+  margin-right: 1rem;
+  padding: 0.625rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  text-align: left;
+}
+table th {
+  border-bottom: 2px solid #e5e7eb;
+}
+table th,
+table td {
+  padding: 0.625rem;
+}
+@media screen and (min-width: 1030px) {
+  table th,
+table td {
+    padding: 1rem;
+  }
+}
+table td {
+  border-bottom: 1px solid #e5e7eb;
+}
+table tr:nth-child(2n) {
+  background-color: #F3F4F6;
+}
+table .sort-btn {
+  cursor: pointer;
+}
+table .sort-btn span,
+table .sort-btn svg {
+  vertical-align: middle;
+}
+table .sort-btn svg {
+  margin-left: 2px;
+}
+@media screen and (min-width: 860px) {
+  table .table__actions {
+    text-align: right;
+  }
+}
+table .edit-btn:first-child {
+  margin-right: 10px;
+}
+table .edit-btn svg:hover {
+  fill: #8a9499;
+}
+
+@media screen and (max-width: 860px) {
+  /* Force table to not be like tables anymore */
+  table,
+thead,
+tbody,
+th,
+td,
+tr {
+    display: block;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  td:before {
+    padding-right: 10px;
+  }
+  /*
+  Label the data
+  */
+  td:before {
+    font-weight: bold;
+  }
+  td:nth-of-type(1):before {
+    content: "Account Holder";
+  }
+  td:nth-of-type(2):before {
+    content: "IBAN";
+  }
+  td:nth-of-type(3):before {
+    content: "Amount";
+  }
+  td:nth-of-type(4):before {
+    content: "Date";
+  }
+  td:nth-of-type(5):before {
+    content: "Note";
+  }
+}
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.15s linear;
+}
+.modal .modal__dialog {
+  width: 600px;
+  margin: 6rem auto;
+  padding: 1rem;
+  opacity: 1;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out, -o-transform 0.3s ease-out;
+}
+.modal .modal__dialog .modal__header {
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin: 0 -1rem 1rem -1rem;
+}
+.modal .modal__dialog .modal__footer {
+  margin-top: 1rem;
+  text-align: right;
+}
+.modal .modal__dialog .modal__footer button {
+  margin-left: 0.625rem;
+}
+
+.modal--open {
+  overflow: hidden;
+}
+
+form label,
+form input,
+form textarea {
+  display: block;
+  width: 100%;
+}
+form input,
+form textarea {
+  border: 1px solid #e5e7eb;
+}
+form label {
+  margin-bottom: 0.5rem;
+  color: #8a9499;
+}
+form input {
+  height: 2rem;
+  padding: 0.625rem;
+}
+form textarea {
+  min-height: 5rem;
+  padding: 0.625rem;
+}
+form .form__error {
+  min-height: 0.5rem;
+  margin: 0.1rem 0 0.3rem 0;
+  color: #D01F2E;
+  font-size: 0.875rem;
 }
 
 /*# sourceMappingURL=index.css.map */

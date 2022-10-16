@@ -1,0 +1,14 @@
+@mixin button($color) {
+  min-width: 80px;
+  padding: 0.625rem;
+  border-radius: 4px;
+  background-color: $color;
+  color: $white;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: background-color .5s;
+
+  &:hover {
+    background-color: darken($color, 10%);
+  }
+}

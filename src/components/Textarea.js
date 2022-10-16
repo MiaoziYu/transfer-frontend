@@ -9,7 +9,7 @@ const Textarea = props => {
         value={value}
         onChange={onChange}
       />
-      <p>{error}</p>
+      <p className="form__error">{error}</p>
     </>
   )
 };
