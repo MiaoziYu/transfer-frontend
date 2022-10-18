@@ -75,8 +75,8 @@ export const TransfersList = (props) => {
 
   let preparedTransfers = filterTransfers(sortTransfers([...props.transfers]));
 
-  const renderedTransfers = preparedTransfers.map(transfer => (
-    <tr key={transfer.id}>
+  const renderedTransfers = preparedTransfers.map((transfer, index) => (
+    <tr key={transfer.id} role="dataRow">
       <td>{transfer.accountHolder}</td>
       <td>{transfer.iban}</td>
       <td>{transfer.amount}</td>
@@ -91,13 +91,15 @@ export const TransfersList = (props) => {
         <button
           type="button"
           onClick={() => onEditButtonClicked(transfer.id)}
-          className="edit-btn">
+          className="edit-btn"
+          role={`edit${index}`}>
             {svg.edit}
         </button>
         <button
           type="button"
           onClick={() => onDeleteButtonClicked(transfer.id)}
-          className="edit-btn">
+          className="edit-btn"
+          role={`delete${index}`}>
           {svg.delete}
         </button>
       </td>
@@ -117,13 +119,15 @@ export const TransfersList = (props) => {
             <th>IBAN</th>
             <th
               onClick={() => setSortConfig('amount')}
-              className="sort-btn">
+              className="sort-btn"
+              role="sortByAmount">
                 <span>Amount</span>
                 {getSortSvg('amount')}
               </th>
             <th
               onClick={() => setSortConfig('date')}
-              className="sort-btn">
+              className="sort-btn"
+              role="sortByDate">
               <span>Date</span>
               {getSortSvg('date')}
             </th>

@@ -16,7 +16,7 @@ export const DeleteConfirmationModal = () => {
 
   const onDeleteButtonClicked = async () => {
     try {
-      await deleteTransfer(transferId).unwrap();;
+      const res = await deleteTransfer(transferId).unwrap();
       closeModal();
       dispatch(setNotification({
         status: 'success',
@@ -34,7 +34,7 @@ export const DeleteConfirmationModal = () => {
 
   return (
     <>
-      {deleteTargetId && <section className="modal">
+      {deleteTargetId && <section className="modal" role="modal">
         <div className="modal__dialog card">
           <div className="modal__header">
             <h2>Delete this transfer?</h2>
@@ -42,13 +42,15 @@ export const DeleteConfirmationModal = () => {
           <div className="modal__footer">
             <button type="button"
               onClick={closeModal}
-              className="btn-grey">
+              className="btn-grey"
+              role="cancelDelete">
               Cancel
             </button>
             <button
               type="button"
               onClick={onDeleteButtonClicked}
-              className="btn-red">
+              className="btn-red"
+              role="confirmDelete">
               Delete
             </button>
           </div>

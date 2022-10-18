@@ -1,0 +1,18 @@
+[
+  {
+    "accountHolder": "Max Mustermann",
+    "iban": "DE75512108001245126199",
+    "amount": 100,
+    "date": "2022-11-02T15:55:46.936Z",
+    "note": "First transfer",
+    "id": "048a4a03-18ff-4ed4-a239-f6b5bc82b72f"
+  },
+  {
+    "accountHolder": "Max Musterfrau",
+    "iban": "DE75512108001245126199",
+    "amount": 200,
+    "date": "2022-11-01T15:55:46.936Z",
+    "note": "Second transfer",
+    "id": "4abe1a0d-bc14-48cb-8416-602c0db2ef21"
+  }
+]
