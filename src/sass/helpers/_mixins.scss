@@ -1,3 +1,5 @@
+@use "../base/colors" as *;
+
 @mixin button($color) {
   min-width: 80px;
   padding: 0.625rem;

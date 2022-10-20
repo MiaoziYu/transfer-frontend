@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 import { useAddNewTransferMutation } from '../slices/apiSlice';
 import { setAddModalVisibility, setNotification } from '../slices/statusSlice';
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate, toogleBackground } from '../../../helpers';
+import { parseGermanDate, togglePageScrolling } from '../../../helpers';
 
 export const AddTransfer = () => {
   const [accountHolder, setAccountHolder] = useState('');
@@ -30,11 +30,12 @@ export const AddTransfer = () => {
     setDate('');
     setNote('');
     dispatch(setAddModalVisibility(false));
-    toogleBackground();
-  }
+    togglePageScrolling();
+  };
 
   const onFormSubmit = async (e) => {
     try {
+      // send post request to api
       await addNewTransfer({
         accountHolder,
         iban,
@@ -44,12 +45,16 @@ export const AddTransfer = () => {
       }).unwrap();
 
       closeModal();
+
+      // trigger success notification
       dispatch(setNotification({
         status: 'success',
         message: 'Transfer created'
       }));
     } catch (error) {
       closeModal();
+
+      // trigger error notification
       dispatch(setNotification({
         status: 'error',
         message: 'Failed to save transfer'

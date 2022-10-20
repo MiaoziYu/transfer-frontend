@@ -8,7 +8,7 @@ import {
 import { svg } from '../../../svg';
 import { SearchInput } from './SearchInput';
 import { AddTransferButton } from '../create/AddTransferButton';
-import { toogleBackground } from '../../../helpers';
+import { togglePageScrolling } from '../../../helpers';
 
 export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);
@@ -18,19 +18,26 @@ export const TransfersList = (props) => {
   const dispatch = useDispatch();
 
   const onEditButtonClicked = (transferId) => {
+    // save transfer id to state, to be used in edit modal
+    // editTargetId !== undefined will activate modal
     dispatch(setEditTargetId(transferId));
-    toogleBackground();
+
+    // prevent page from scrolling when modal is active
+    togglePageScrolling();
   }
 
   const onDeleteButtonClicked = (transferId) => {
+    // save transfer id to state, to be used in delete modal
+    // deleteTargetId !== undefined will activate modal
     dispatch(setDeleteTargetId(transferId));
-    toogleBackground();
+
+    // prevent page from scrolling when modal is active
+    togglePageScrolling();
   }
 
-  const setFilterConfig = (value) => {
-    setFilterKeyword(value)
-  }
-
+  /**
+   * @param key sort key from click event
+   */
   const setSortConfig = (key) => {
     if (key === sortKey) {
       setIsSortAscending(!isSortAscending);
@@ -75,7 +82,7 @@ export const TransfersList = (props) => {
 
   let preparedTransfers = filterTransfers(sortTransfers([...props.transfers]));
 
-  const renderedTransfers = preparedTransfers.map((transfer, index) => (
+  const renderedTransfers = preparedTransfers.map((transfer) => (
     <tr key={transfer.id} role="dataRow">
       <td>{transfer.accountHolder}</td>
       <td>{transfer.iban}</td>
@@ -109,7 +116,7 @@ export const TransfersList = (props) => {
   return (
     <>
       <div className="search-input-wrapper">
-        <SearchInput onChange={setFilterConfig} />
+        <SearchInput onChange={setFilterKeyword} />
         <AddTransferButton />
       </div>
       <table>

@@ -1,13 +1,16 @@
 import { useDispatch } from 'react-redux';
-import { toogleBackground } from '../../../helpers';
+import { togglePageScrolling } from '../../../helpers';
 import { setAddModalVisibility } from '../slices/statusSlice';
 
 export const AddTransferButton = () => {
   const dispatch = useDispatch();
 
   const onButtonClicked = () => {
+    // addModalVisibility === true will activate modal
     dispatch(setAddModalVisibility(true));
-    toogleBackground();
+
+    // prevent page from scrolling when modal is active
+    togglePageScrolling();
   }
 
   return (

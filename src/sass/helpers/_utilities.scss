@@ -1,10 +1,6 @@
-.mb-1 {
-  margin-bottom: 1rem;
-}
-
-.mr-1 {
-  margin-right: 1rem;
-}
+@use "../base/breakpoints" as *;
+@use "../base/colors" as *;
+@use "mixins" as *;
 
 .card {
   padding: 0.625rem;
@@ -42,8 +38,4 @@
 
 .btn-red {
   @include button($red)
-}
-
-.hidden {
-  display: none;
 }

@@ -1,14 +1,11 @@
-@import "base/normalize";
-@import "base/reset";
-@import "base/colors";
-@import "base/typography";
-@import "base/breakpoints";
+@use "base/normalize";
+@use "base/reset";
+@use "base/typography";
 
-@import "helpers/mixins";
-@import "helpers/utilities";
+@use "helpers/utilities";
 
-@import "components/common";
-@import "components/table";
-@import "components/modal";
-@import "components/form";
-@import "components/notification";
+@use "components/common";
+@use "components/table";
+@use "components/modal";
+@use "components/form";
+@use "components/notification";

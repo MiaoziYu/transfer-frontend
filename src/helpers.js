@@ -12,7 +12,7 @@ export const parseGermanDate = (date) => {
   return parse(date, 'dd.MM.yyyy', new Date());
 }
 
-export const toogleBackground = () => {
+export const togglePageScrolling = () => {
   const body = document.querySelector('body');
   body.classList.toggle('modal--open');
 }

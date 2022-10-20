@@ -1,3 +1,6 @@
+@use "../base/breakpoints" as *;
+@use "../base/colors" as *;
+
 .search-input-wrapper {
   display: flex;
   justify-content: space-between;

@@ -4,7 +4,7 @@ import { format, formatISO } from 'date-fns';
 import { useEditTransferMutation } from '../slices/apiSlice'
 import { setEditTargetId, setNotification } from '../slices/statusSlice'
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate, toogleBackground } from '../../../helpers';
+import { parseGermanDate, togglePageScrolling } from '../../../helpers';
 
 export const EditTransfer = (props) => {
   const { transfer } = props;
@@ -25,11 +25,12 @@ export const EditTransfer = (props) => {
 
   const closeModal = () => {
     dispatch(setEditTargetId(undefined));
-    toogleBackground();
+    togglePageScrolling();
   }
 
   const onFormSubmit = async (e) => {
     try {
+      // send put request to api
       await updateTransfer({
         id: transfer.id,
         accountHolder,
@@ -40,12 +41,16 @@ export const EditTransfer = (props) => {
       }).unwrap();
 
       closeModal();
+
+      // trigger success notification
       dispatch(setNotification({
         status: 'success',
         message: 'Transfer updated'
       }));
     } catch (error) {
       closeModal();
+
+      // trigger error notification
       dispatch(setNotification({
         status: 'error',
         message: 'Failed to update transfer'

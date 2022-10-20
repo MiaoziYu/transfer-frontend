@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { toogleBackground } from '../../../helpers';
+import { togglePageScrolling } from '../../../helpers';
 import { useDeleteTransferMutation } from '../slices/apiSlice'
 import { setDeleteTargetId, setNotification } from '../slices/statusSlice'
 
@@ -11,19 +11,25 @@ export const DeleteConfirmationModal = () => {
 
   const closeModal = () => {
     dispatch(setDeleteTargetId(undefined));
-    toogleBackground();
+    togglePageScrolling();
   }
 
   const onDeleteButtonClicked = async () => {
     try {
-      const res = await deleteTransfer(transferId).unwrap();
+      // send delete request to api
+      await deleteTransfer(transferId).unwrap();
+
       closeModal();
+
+      // trigger success notification
       dispatch(setNotification({
         status: 'success',
         message: 'Transfer deleted'
       }));
     } catch (error) {
       closeModal();
+
+      // trigger error notification
       dispatch(setNotification({
         status: 'error',
         message: 'Failed to delete transfer'
