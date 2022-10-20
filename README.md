@@ -1,46 +1,82 @@
-# Getting Started with Create React App and Redux
+Transfer-frontend
+====
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This is the frontend project for the transfers backend,
+the main purpose of this project is for me to practice
+react app development.
 
-## Available Scripts
+## Installation
+Install node dependencies
+```bash
+$ npm i
+```
+## Settings
 
-In the project directory, you can run:
+- `.env` file is to store the application variables
 
-### `npm start`
+- all the variables must have prefix `REACT_APP_`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Development
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Start a development server
 
-### `npm test`
+```bash
+$ npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+By default the app is running at [http://localhost:3001/](http://localhost:3001/)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Watch and compile sass files
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+$ npm run sass:watch
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Build sass for production
 
-### `npm run eject`
+```bash
+$ npm run sass:build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Test
+we use [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+combined with mocking library [MSW](https://mswjs.io/) that uses Service Worker API to intercept actual requests.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Watch test changes
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+$ npm test
+```
 
-## Learn More
+### Generate test report
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+$ npm test --coverage
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project structure
+
+```
+├── public
+│   └── index.html // context for react to render to
+├── src
+│   ├── app
+│   │   ├── store.js // setup store
+│   ├── components // shared components
+│   ├── feature
+│   │   ├── transfers
+│   │       ├── create
+│   │       ├── delete
+│   │       ├── edit
+│   │       ├── list
+│   │       ├── partials
+│   │       ├── slices // reducers and actions to send API requests and manage states
+│   ├── sass
+│   ├── utils // heplers to reuse across the application
+│   └── testUtils // utilities and fake date for running tests
+├── index.js // entry points for react components
+├── index.css // compiled style sheets
+├── .env
+```
