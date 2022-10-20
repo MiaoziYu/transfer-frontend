@@ -49,7 +49,6 @@ export const AddTransfer = () => {
         message: 'Transfer created'
       }));
     } catch (error) {
-      console.log(error);
       closeModal();
       dispatch(setNotification({
         status: 'error',
@@ -60,7 +59,7 @@ export const AddTransfer = () => {
 
   return (
     <>
-      {isVisible && <section className="modal">
+      {isVisible && <section className="modal" role="modal">
         <div className="modal__dialog card">
           <div className="modal__header">
             <h2>Add new transfer</h2>

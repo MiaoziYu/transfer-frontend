@@ -45,7 +45,6 @@ export const EditTransfer = (props) => {
         message: 'Transfer updated'
       }));
     } catch (error) {
-      console.log('error')
       closeModal();
       dispatch(setNotification({
         status: 'error',

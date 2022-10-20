@@ -92,14 +92,14 @@ export const TransfersList = (props) => {
           type="button"
           onClick={() => onEditButtonClicked(transfer.id)}
           className="edit-btn"
-          role={`edit${index}`}>
+          role="editButton">
             {svg.edit}
         </button>
         <button
           type="button"
           onClick={() => onDeleteButtonClicked(transfer.id)}
           className="edit-btn"
-          role={`delete${index}`}>
+          role="deleteButton">
           {svg.delete}
         </button>
       </td>
@@ -119,15 +119,13 @@ export const TransfersList = (props) => {
             <th>IBAN</th>
             <th
               onClick={() => setSortConfig('amount')}
-              className="sort-btn"
-              role="sortByAmount">
+              className="sort-btn">
                 <span>Amount</span>
                 {getSortSvg('amount')}
               </th>
             <th
               onClick={() => setSortConfig('date')}
-              className="sort-btn"
-              role="sortByDate">
+              className="sort-btn">
               <span>Date</span>
               {getSortSvg('date')}
             </th>

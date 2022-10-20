@@ -1,5 +1,5 @@
 const Input = props => {
-  const { id, name, value, placeholder, onChange, required, error } = props;
+  const { id, name, value, placeholder, onChange, required, error, role } = props;
 
   return (
     <>
@@ -11,6 +11,7 @@ const Input = props => {
         placeholder={placeholder}
         onChange={onChange}
         required={required}
+        role={role}
       />
       <p className="form__error">{error}</p>
     </>

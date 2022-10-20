@@ -4,7 +4,7 @@
     "iban": "DE75512108001245126199",
     "amount": 100,
     "date": "2022-11-02T15:55:46.936Z",
-    "note": "First transfer",
+    "note": "this is note for the first transfer",
     "id": "048a4a03-18ff-4ed4-a239-f6b5bc82b72f"
   },
   {
@@ -12,7 +12,7 @@
     "iban": "DE75512108001245126199",
     "amount": 200,
     "date": "2022-11-01T15:55:46.936Z",
-    "note": "Second transfer",
+    "note": "this is note for the second transfer",
     "id": "4abe1a0d-bc14-48cb-8416-602c0db2ef21"
   }
 ]

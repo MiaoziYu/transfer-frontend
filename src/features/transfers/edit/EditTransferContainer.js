@@ -28,7 +28,7 @@ export const EditTransferContainer = () => {
 
   return (
     <>
-      {editTargetId && <section className="modal">
+      {editTargetId && <section className="modal" role="modal">
         <div className="modal__dialog card">
           <div className="modal__header">
             <h2>Edit transfer</h2>

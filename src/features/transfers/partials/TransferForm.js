@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { isValid, parse, isPast } from 'date-fns';
+import { isValid, isPast } from 'date-fns';
 import IBAN from 'iban';
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
@@ -62,7 +62,7 @@ export const TransferForm = (props) => {
 
   return (
     <>
-    <form>
+    <form role="form">
       <label htmlFor="accountHolder">Account holder</label>
       <Input
         id="accountHolder"

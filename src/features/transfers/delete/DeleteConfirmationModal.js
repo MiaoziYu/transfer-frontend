@@ -23,7 +23,6 @@ export const DeleteConfirmationModal = () => {
         message: 'Transfer deleted'
       }));
     } catch (error) {
-      console.log('error')
       closeModal();
       dispatch(setNotification({
         status: 'error',
@@ -42,15 +41,13 @@ export const DeleteConfirmationModal = () => {
           <div className="modal__footer">
             <button type="button"
               onClick={closeModal}
-              className="btn-grey"
-              role="cancelDelete">
+              className="btn-grey">
               Cancel
             </button>
             <button
               type="button"
               onClick={onDeleteButtonClicked}
-              className="btn-red"
-              role="confirmDelete">
+              className="btn-red">
               Delete
             </button>
           </div>

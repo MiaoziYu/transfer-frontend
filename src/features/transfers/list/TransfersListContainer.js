@@ -7,21 +7,16 @@ import { TransfersList } from './TransfersList';
 export const TransfersListContainer = (props) => {
   const {
     data: transfers = [],
-    isLoading,
     isSuccess,
     isError,
     error
   } = useGetTransfersQuery();
 
-
   let content;
 
-  if (isLoading) {
-    content = <div>is loading</div>
-  } else if (isSuccess) {
+  if (isSuccess) {
     content = <TransfersList transfers={transfers} />
   } else if (isError) {
-    console.log(error)
     content = (
       <>
         <h2>Cannot fetch transfers from server</h2>
