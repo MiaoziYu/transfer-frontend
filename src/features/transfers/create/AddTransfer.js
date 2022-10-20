@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 import { useAddNewTransferMutation } from '../slices/apiSlice';
 import { setAddModalVisibility, setNotification } from '../slices/statusSlice';
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate, togglePageScrolling } from '../../../helpers';
+import { parseGermanDate, togglePageScrolling } from '../../../utils/helpers';
 
 export const AddTransfer = () => {
   const [accountHolder, setAccountHolder] = useState('');

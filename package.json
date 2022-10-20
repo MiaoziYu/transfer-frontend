@@ -15,12 +15,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch:sass": "sass --watch --update --style=expanded src/sass/:src/",
-    "build:sass": "sass --no-source-map --style=compressed src/sass/:src/"
+    "sass:watch": "sass --watch --update --style=expanded src/sass/:src/",
+    "sass:build": "sass --no-source-map --style=compressed src/sass/:src/",
+    "postinstall": "bash setup.sh"
   },
   "eslintConfig": {
     "extends": [

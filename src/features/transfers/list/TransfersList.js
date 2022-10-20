@@ -5,10 +5,10 @@ import {
   setEditTargetId,
   setDeleteTargetId,
 } from '../slices/statusSlice';
-import { svg } from '../../../svg';
+import { svg } from '../../../utils/svg';
 import { SearchInput } from './SearchInput';
 import { AddTransferButton } from '../create/AddTransferButton';
-import { togglePageScrolling } from '../../../helpers';
+import { togglePageScrolling } from '../../../utils/helpers';
 
 export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);

@@ -3,7 +3,7 @@ import { isValid, isPast } from 'date-fns';
 import IBAN from 'iban';
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
-import { parseGermanDate } from '../../../helpers';
+import { parseGermanDate } from '../../../utils/helpers';
 
 export const TransferForm = (props) => {
   const {

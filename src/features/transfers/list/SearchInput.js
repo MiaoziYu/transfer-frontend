@@ -1,4 +1,4 @@
-import { debounce } from '../../../helpers';
+import { debounce } from '../../../utils/helpers';
 
 export const SearchInput = (props) => {
   const handleSearch = () => {

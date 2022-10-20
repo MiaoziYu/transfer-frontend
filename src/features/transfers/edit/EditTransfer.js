@@ -4,7 +4,7 @@ import { format, formatISO } from 'date-fns';
 import { useEditTransferMutation } from '../slices/apiSlice'
 import { setEditTargetId, setNotification } from '../slices/statusSlice'
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate, togglePageScrolling } from '../../../helpers';
+import { parseGermanDate, togglePageScrolling } from '../../../utils/helpers';
 
 export const EditTransfer = (props) => {
   const { transfer } = props;

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { togglePageScrolling } from '../../../helpers';
+import { togglePageScrolling } from '../../../utils/helpers';
 import { setAddModalVisibility } from '../slices/statusSlice';
 
 export const AddTransferButton = () => {

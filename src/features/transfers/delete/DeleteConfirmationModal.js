@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { togglePageScrolling } from '../../../helpers';
+import { togglePageScrolling } from '../../../utils/helpers';
 import { useDeleteTransferMutation } from '../slices/apiSlice'
 import { setDeleteTargetId, setNotification } from '../slices/statusSlice'
 

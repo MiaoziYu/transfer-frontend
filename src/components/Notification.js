@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../features/transfers/slices/statusSlice";
-import { svg } from '../svg';
+import { svg } from '../utils/svg';
 
 const Notification = () => {
   const status = useSelector(state => state.transferStatus.notification.status);
