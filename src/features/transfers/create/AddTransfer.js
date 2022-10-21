@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatISO } from 'date-fns';
-import IBAN from 'iban';
 import { useAddNewTransferMutation } from '../slices/apiSlice';
 import { setAddModalVisibility, setNotification } from '../slices/statusSlice';
 import { TransferForm } from '../partials/TransferForm';
-import {
-  formatEuroForApi,
-  parseGermanDate,
-  togglePageScrolling
-} from '../../../utils/helpers';
+import { togglePageScrolling } from '../../../utils/helpers';
+import formatter from '../../../utils/formatter';
 
 export const AddTransfer = () => {
   const [accountHolder, setAccountHolder] = useState('');
@@ -43,9 +38,9 @@ export const AddTransfer = () => {
       // send post request to api
       await addNewTransfer({
         accountHolder,
-        iban: IBAN.electronicFormat(iban),
-        amount: formatEuroForApi(amount),
-        date: formatISO(parseGermanDate(date)),
+        iban: formatter.formatIbanForApi(iban),
+        amount: formatter.formatAmountForApi(amount),
+        date: formatter.formatDateForApi(date),
         note
       }).unwrap();
 

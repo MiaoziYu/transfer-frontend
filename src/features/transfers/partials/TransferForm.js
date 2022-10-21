@@ -3,7 +3,8 @@ import { isValid, isPast } from 'date-fns';
 import IBAN from 'iban';
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
-import { parseGermanDate } from '../../../utils/helpers';
+import { errorMessages } from '../../../utils/errorMessages';
+import formatter from '../../../utils/formatter';
 
 export const TransferForm = (props) => {
   const {
@@ -27,26 +28,26 @@ export const TransferForm = (props) => {
     const errors = {};
 
     if (!IBAN.isValid(iban)) {
-      errors.iban = 'Invalid IBAN number';
+      errors.iban = errorMessages.invalidIban;
     }
 
     let stringAmount = String(amount);
     if (!(stringAmount).match(/^\d{1,3}(?:\.?\d{3})*(?:,\d{1,2})?$/)) {
-      errors.amount = 'Invalid amount format';
+      errors.amount = errorMessages.invalidAmount;
     } else {
-      let numberAmount = Number(stringAmount.replace('.','').split(',')[0]);
+      let numberAmount = Number(stringAmount.replaceAll('.', '').replace(',', '.'));
       if (numberAmount > 20000000) {
-        errors.amount = 'Amount value must be less than 20000000';
+        errors.amount = errorMessages.amountValueTooLarge;
       } else if (numberAmount < 50) {
-        errors.amount = 'Amount value must be larger than 50';
+        errors.amount = errorMessages.amountValueTooSmall;
       }
     }
 
-    const parsedDate = parseGermanDate(date);
+    const parsedDate = formatter.parseGermanDate(date);
     if (!isValid(parsedDate)) {
-      errors.date = 'Invalid date, use german date format dd.mm.yyyy';
+      errors.date = errorMessages.invalidDate;
     } else if (isPast(parsedDate)) {
-      errors.date = 'Date must be in the future';
+      errors.date = errorMessages.dateIsPast;
     }
 
     return errors;

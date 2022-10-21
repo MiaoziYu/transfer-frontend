@@ -6,6 +6,7 @@ const Input = props => {
       <input
         type="text"
         id={id}
+        className={error ? "input--error" : ""}
         name={name}
         value={value}
         placeholder={placeholder}

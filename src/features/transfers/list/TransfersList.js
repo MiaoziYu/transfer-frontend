@@ -7,12 +7,8 @@ import {
 import { svg } from '../../../utils/svg';
 import { SearchInput } from './SearchInput';
 import { AddTransferButton } from '../create/AddTransferButton';
-import { togglePageScrolling,
-  formatEuro,
-  formatDate,
-  generateExcerpt,
-  formatIban
-} from '../../../utils/helpers';
+import { togglePageScrolling } from '../../../utils/helpers';
+import formatter from '../../../utils/formatter';
 
 export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);
@@ -88,23 +84,23 @@ export const TransfersList = (props) => {
 
   const renderedTransfers = preparedTransfers.map((transfer) => (
     <tr key={transfer.id} role="dataRow">
-      <td>{transfer.accountHolder}</td>
-      <td className="monospaced-font">{formatIban(transfer.iban)}</td>
-      <td className="text-right monospaced-font">{formatEuro(transfer.amount, true)}</td>
-      <td className="monospaced-font">{formatDate(transfer.date)}</td>
-      <td>{generateExcerpt(transfer.note)} </td>
+      <td className="table__account-holder monospaced-font">{transfer.accountHolder}</td>
+      <td className="table__iban">{formatter.formatIban(transfer.iban)}</td>
+      <td className="text-right monospaced-font">{formatter.formatAmount(transfer.amount, true)}</td>
+      <td>{formatter.formatDate(transfer.date)}</td>
+      <td>{formatter.formatAsExcerpt(transfer.note)}</td>
       <td className="table__actions">
         <button
           type="button"
           onClick={() => onEditButtonClicked(transfer.id)}
-          className="edit-btn"
+          className="table__edit-btn"
           role="editButton">
             {svg.edit}
         </button>
         <button
           type="button"
           onClick={() => onDeleteButtonClicked(transfer.id)}
-          className="edit-btn"
+          className="table__edit-btn"
           role="deleteButton">
           {svg.delete}
         </button>
@@ -125,7 +121,7 @@ export const TransfersList = (props) => {
             <th>IBAN</th>
             <th
               onClick={() => setSortConfig('amount')}
-              className="sort-btn text-right">
+              className="table__sort-btn text-right">
                 <span>Amount</span>
                 {getSortSvg('amount')}
               </th>

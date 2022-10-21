@@ -6,7 +6,6 @@ import { EditTransfer } from './EditTransfer';
 // usually don’t have any DOM markup of their own
 // except for some wrapping divs, and never have any styles.
 export const EditTransferContainer = () => {
-  const transferId = useSelector(state => state.transferStatus.editTargetId);
   const editTargetId = useSelector(state => state.transferStatus.editTargetId);
 
   const {
@@ -14,7 +13,7 @@ export const EditTransferContainer = () => {
     isFetching,
     isSuccess,
     isError
-  } = useGetTransferQuery(transferId)
+  } = useGetTransferQuery(editTargetId)
 
   let content;
 

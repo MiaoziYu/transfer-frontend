@@ -4,7 +4,6 @@ import { useDeleteTransferMutation } from '../slices/apiSlice'
 import { setDeleteTargetId, setNotification } from '../slices/statusSlice'
 
 export const DeleteConfirmationModal = () => {
-  const transferId = useSelector(state => state.transferStatus.deleteTargetId);
   const deleteTargetId = useSelector(state => state.transferStatus.deleteTargetId);
   const dispatch = useDispatch();
   const [deleteTransfer] = useDeleteTransferMutation()
@@ -17,7 +16,7 @@ export const DeleteConfirmationModal = () => {
   const onDeleteButtonClicked = async () => {
     try {
       // send delete request to api
-      await deleteTransfer(transferId).unwrap();
+      await deleteTransfer(deleteTargetId).unwrap();
 
       closeModal();
 
