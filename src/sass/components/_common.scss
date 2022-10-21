@@ -1,6 +1,12 @@
 @use "../base/breakpoints" as *;
 @use "../base/colors" as *;
 
+body,
+input,
+textarea {
+  color: $black;
+}
+
 main {
   margin-top: -1rem;
   margin-bottom: 2rem;

@@ -10,7 +10,7 @@
 .search-input {
   flex-grow: 1;
   margin-right: 1rem;
-  padding: 0.625rem;
+  padding: 0.625rem 1rem;
   border: 1px solid $border-color;
   border-radius: 4px;
 }
@@ -41,13 +41,33 @@ table {
 
   td {
     border-bottom: 1px solid $border-color;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: -1px;
   }
 
   tr:nth-child(2n) {
     background-color: $light-grey;
   }
 
-  .sort-btn {
+  .table__account-holder {
+    @media screen and (min-width: $breakpoint-s) {
+      max-width: 170px;
+    }
+  }
+
+  .table__iban {
+    @media screen and (min-width: $breakpoint-s) {
+      max-width: 230px;
+    }
+  }
+
+  .table__actions {
+    @media screen and (min-width: $breakpoint-s) {
+      text-align: right;
+    }
+  }
+
+  .table__sort-btn {
     cursor: pointer;
 
     span,
@@ -60,13 +80,7 @@ table {
     }
   }
 
-  .table__actions {
-    @media screen and (min-width: $breakpoint-s) {
-      text-align: right;
-    }
-  }
-
-  .edit-btn {
+  .table__edit-btn {
     &:first-child {
       margin-right: 10px;
     }
