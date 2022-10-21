@@ -127,7 +127,7 @@ export const TransfersList = (props) => {
               </th>
             <th
               onClick={() => setSortConfig('date')}
-              className="sort-btn">
+              className="table__sort-btn">
               <span>Date</span>
               {getSortSvg('date')}
             </th>
