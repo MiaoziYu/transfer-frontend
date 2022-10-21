@@ -14,7 +14,7 @@ $ npm i
 
 - `.env` file is to store the application variables
 
-- all the variables must have prefix `REACT_APP_`
+- all the variables must have prefix `REACT_APP_` to be recognized by React
 
 ## Development
 
