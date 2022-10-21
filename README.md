@@ -49,13 +49,13 @@ Test files are in `__tests__` folders next to the code they are testing so that 
 ### Watch test changes
 
 ```bash
-$ npm test
+$ npm test a
 ```
 
 ### Generate test report
 
 ```bash
-$ npm test -- --coverage
+$ npm test -- --coverage --watchAll=false
 ```
 (note extra -- in the middle)
 
