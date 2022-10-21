@@ -44,6 +44,8 @@ we use [Jest](https://jestjs.io/) and [React Testing Library](https://testing-li
 
 combined with mocking library [MSW](https://mswjs.io/) that uses Service Worker API to intercept actual requests.
 
+Test files are in `__tests__` folders next to the code they are testing so that relative imports appear shorter
+
 ### Watch test changes
 
 ```bash
@@ -53,8 +55,9 @@ $ npm test
 ### Generate test report
 
 ```bash
-$ npm test --coverage
+$ npm test -- --coverage
 ```
+(note extra -- in the middle)
 
 ## Project structure
 
@@ -75,7 +78,7 @@ $ npm test --coverage
 │   │       ├── slices // reducers and actions to send API requests and manage states
 │   ├── sass
 │   ├── utils // heplers to reuse across the application
-│   └── testUtils // utilities and fake date for running tests
+│   └── testUtils // utilities and fake data for running tests
 ├── index.js // entry points for react components
 ├── index.css // compiled style sheets
 ├── .env
