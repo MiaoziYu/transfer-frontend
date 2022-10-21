@@ -31,6 +31,12 @@ table {
     @media screen and (min-width: $breakpoint-m) {
       padding: 1rem;
     }
+
+    @media screen and (max-width: $breakpoint-m) {
+      &.text-right {
+        text-align: left;
+      }
+    }
   }
 
   td {

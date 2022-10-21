@@ -14,7 +14,7 @@
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin-right: 1rem;
   margin-left: 1rem;
 
@@ -39,3 +39,13 @@
 .btn-red {
   @include button($red)
 }
+
+.text-right {
+  text-align: right;
+}
+
+.monospaced-font {
+  font-family: Courier;
+  letter-spacing: -1px;
+}
+
