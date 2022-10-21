@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { format, formatISO } from 'date-fns';
+import { formatISO } from 'date-fns';
+import IBAN from 'iban';
 import { useEditTransferMutation } from '../slices/apiSlice'
 import { setEditTargetId, setNotification } from '../slices/statusSlice'
 import { TransferForm } from '../partials/TransferForm';
-import { parseGermanDate, togglePageScrolling } from '../../../utils/helpers';
+import {
+  formatDate,
+  formatIban,
+  formatEuro,
+  formatEuroForApi,
+  parseGermanDate,
+  togglePageScrolling
+} from '../../../utils/helpers';
 
 export const EditTransfer = (props) => {
   const { transfer } = props;
   const [accountHolder, setAccountHolder] = useState(transfer.accountHolder);
-  const [iban, setIban] = useState(transfer.iban);
-  const [amount, setAmount] = useState(transfer.amount);
-  const [date, setDate] = useState(format(Date.parse(transfer.date), 'dd.MM.yyyy'));
+  const [iban, setIban] = useState(formatIban(transfer.iban));
+  const [amount, setAmount] = useState(formatEuro(transfer.amount));
+  const [date, setDate] = useState(formatDate(transfer.date));
   const [note, setNote] = useState(transfer.note);
 
   const dispatch = useDispatch();
@@ -34,8 +42,8 @@ export const EditTransfer = (props) => {
       await updateTransfer({
         id: transfer.id,
         accountHolder,
-        iban,
-        amount,
+        iban: IBAN.electronicFormat(iban),
+        amount: formatEuroForApi(amount),
         date: formatISO(parseGermanDate(date)),
         note
       }).unwrap();

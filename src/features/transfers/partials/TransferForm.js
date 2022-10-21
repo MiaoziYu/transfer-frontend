@@ -30,8 +30,16 @@ export const TransferForm = (props) => {
       errors.iban = 'Invalid IBAN number';
     }
 
-    if (!String(amount).match(/^\d{1,3}(?:\.?\d{3})*(?:,\d{1,2})?$/)) {
+    let stringAmount = String(amount);
+    if (!(stringAmount).match(/^\d{1,3}(?:\.?\d{3})*(?:,\d{1,2})?$/)) {
       errors.amount = 'Invalid amount format';
+    } else {
+      let numberAmount = Number(stringAmount.replace('.','').split(',')[0]);
+      if (numberAmount > 20000000) {
+        errors.amount = 'Amount value must be less than 20000000';
+      } else if (numberAmount < 50) {
+        errors.amount = 'Amount value must be larger than 50';
+      }
     }
 
     const parsedDate = parseGermanDate(date);
@@ -86,6 +94,7 @@ export const TransferForm = (props) => {
         name="amount"
         value={amount}
         onChange={onAmountChanged}
+        placeholder="50 - 20.000.000 max 2 decimals"
         required
         error={formErrors.amount}
       />

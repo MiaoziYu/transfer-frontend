@@ -20,6 +20,7 @@ export const TransfersListContainer = () => {
     content = (
       <>
         <h2>Cannot fetch transfers from server</h2>
+        <div>Status code: {error.originalStatus}</div>
       </>
     )
   }

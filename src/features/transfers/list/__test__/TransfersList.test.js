@@ -22,6 +22,12 @@ describe('TransferList', () => {
     const dataRow = await screen.findAllByRole('dataRow');
     expect(dataRow).toHaveLength(2);
 
+    // check if IBAN is displayed in correct format
+    expect(within(dataRow[0]).getByText('DE75 5121 0800 1245 1261 99'));
+
+    // check if amout is displayed in correct format
+    await waitFor(() => expect(within(dataRow[0]).queryByText('100,00 €')));
+
     // check if date is displayed in correct format
     expect(within(dataRow[0]).getByText('02.11.2022'));
 
@@ -45,7 +51,7 @@ describe('TransferList', () => {
     fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
 
     // Assert
-    expect(await screen.findByText(/Cannot fetch transfers from server/i));
+    await waitFor(() => expect(screen.queryByText(/Cannot fetch transfers from server/i)));
   });
 
   describe('Search Input', () => {

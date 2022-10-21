@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { format } from 'date-fns';
 import {
   setEditTargetId,
   setDeleteTargetId,
@@ -8,7 +7,12 @@ import {
 import { svg } from '../../../utils/svg';
 import { SearchInput } from './SearchInput';
 import { AddTransferButton } from '../create/AddTransferButton';
-import { togglePageScrolling } from '../../../utils/helpers';
+import { togglePageScrolling,
+  formatEuro,
+  formatDate,
+  generateExcerpt,
+  formatIban
+} from '../../../utils/helpers';
 
 export const TransfersList = (props) => {
   const [sortKey, setSortKey] = useState(undefined);
@@ -85,15 +89,10 @@ export const TransfersList = (props) => {
   const renderedTransfers = preparedTransfers.map((transfer) => (
     <tr key={transfer.id} role="dataRow">
       <td>{transfer.accountHolder}</td>
-      <td>{transfer.iban}</td>
-      <td>{transfer.amount}</td>
-      <td>
-        {Date.parse(transfer.date) ? format(Date.parse(transfer.date), 'dd.MM.yyyy') : ''}
-        </td>
-      <td>
-        {transfer.note.substring(0, 20)}
-        {transfer.note.length > 20 ? "..." : ""}
-      </td>
+      <td className="monospaced-font">{formatIban(transfer.iban)}</td>
+      <td className="text-right monospaced-font">{formatEuro(transfer.amount, true)}</td>
+      <td className="monospaced-font">{formatDate(transfer.date)}</td>
+      <td>{generateExcerpt(transfer.note)} </td>
       <td className="table__actions">
         <button
           type="button"
@@ -126,7 +125,7 @@ export const TransfersList = (props) => {
             <th>IBAN</th>
             <th
               onClick={() => setSortConfig('amount')}
-              className="sort-btn">
+              className="sort-btn text-right">
                 <span>Amount</span>
                 {getSortSvg('amount')}
               </th>

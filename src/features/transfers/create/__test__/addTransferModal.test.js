@@ -1,5 +1,6 @@
 import { screen, within, fireEvent, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
+import { endOfTomorrow, format } from 'date-fns';
 import Notification from '../../../../components/Notification';
 import { configServer } from '../../../../testUtils/configServer';
 import { TransfersListContainer } from '../../list/TransfersListContainer';
@@ -18,6 +19,8 @@ const fakeServer = configServer(component);
 const openModal = async () => {
     fireEvent.click(await screen.findByRole('button', {name: /Add transfer/i}));
 };
+
+const tomorrow = format(Date.parse(endOfTomorrow()), 'dd.MM.yyyy');
 
 describe('Add transfer button', () => {
   it('should activate add transfer modal', async () => {
@@ -39,7 +42,7 @@ describe('Form submit button', () => {
 
     fireEvent.change(screen.getByLabelText(/IBAN/i), {target: {value: '123'}}); // invalid value
     fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100'}});
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2300'}});
+    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: tomorrow}});
 
     fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
 
@@ -47,19 +50,48 @@ describe('Form submit button', () => {
     expect(screen.queryByRole('form')).toHaveTextContent(('Invalid IBAN number'));
   });
 
-  it('should show error message if amount is invalid', async () => {
+  it('should show error message if amount is in invalid format', async () => {
     // Act
     await openModal();
 
     fireEvent.change(screen.getByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
     fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100,123'}}); // invalid value
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2300'}});
+    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: tomorrow}});
 
     fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
 
     // Assert
     expect(await screen.findByRole('form')).toHaveTextContent(('Invalid amount format'));
   });
+
+  it('should show error message if amount exceeds 20000000', async () => {
+    // Act
+    await openModal();
+
+    fireEvent.change(screen.getByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
+    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100000000'}}); // invalid value
+    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: tomorrow}});
+
+    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
+
+    // Assert
+    expect(await screen.findByRole('form')).toHaveTextContent(('Amount value must be less than 20000000'));
+  });
+
+  it('should show error message if amount is less than 50', async () => {
+    // Act
+    await openModal();
+
+    fireEvent.change(screen.getByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
+    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '10'}}); // invalid value
+    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: tomorrow}});
+
+    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
+
+    // Assert
+    expect(await screen.findByRole('form')).toHaveTextContent(('Amount value must be larger than 50'));
+  });
+
 
   it('should show error message if date is invalid', async () => {
     // Act
@@ -96,7 +128,7 @@ describe('Form submit button', () => {
     fireEvent.change(screen.getByLabelText(/Account holder/i), {target: {value: 'new user'}});
     fireEvent.change(screen.getByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
     fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100'}});
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2300'}});
+    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: tomorrow}});
 
     // Act
     fireEvent.click(await screen.findByRole('button', {name: /Save/i}));

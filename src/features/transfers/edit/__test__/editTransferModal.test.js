@@ -33,8 +33,8 @@ describe('Edit transfer button', () => {
 
     // check if form data is filled
     expect(screen.getByLabelText(/Account holder/i).value).toBe('Max Mustermann');
-    expect(screen.getByLabelText(/IBAN/i).value).toBe('DE75512108001245126199');
-    expect(screen.getByLabelText(/Amount/i).value).toBe('100');
+    expect(screen.getByLabelText(/IBAN/i).value).toBe('DE75 5121 0800 1245 1261 99');
+    expect(screen.getByLabelText(/Amount/i).value).toBe('1.000');
     expect(screen.getByLabelText(/Date/i).value).toBe('02.11.2022');
     expect(screen.getByLabelText(/Note/i).value).toBe('this is note for the first transfer');
   });
@@ -59,67 +59,12 @@ describe('Edit transfer button', () => {
 });
 
 describe('Form submit button', () => {
-  it('should show error message if IBAN is invalid', async () => {
-    // Act
-    await openModal();
-
-    fireEvent.change(await screen.findByLabelText(/IBAN/i), {target: {value: '123'}}); // invalid value
-    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100'}});
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2300'}});
-
-    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
-
-    // Assert
-    expect(screen.queryByRole('form')).toHaveTextContent(('Invalid IBAN number'));
-  });
-
-  it('should show error message if amount is invalid', async () => {
-    // Act
-    await openModal();
-
-    fireEvent.change(await screen.findByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
-    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100,123'}}); // invalid value
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2300'}});
-
-    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
-
-    // Assert
-    expect(await screen.findByRole('form')).toHaveTextContent(('Invalid amount format'));
-  });
-
-  it('should show error message if date is invalid', async () => {
-    // Act
-    await openModal();
-
-    fireEvent.change(await screen.findByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
-    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100'}});
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '2023-10-11'}}); // invalid value
-
-    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
-
-    // Assert
-    expect(await screen.findByRole('form')).toHaveTextContent(('Invalid date, use german date format dd.mm.yyyy'));
-  });
-
-  it('should show error message if date is in the past', async () => {
-    // Act
-    await openModal();
-
-    fireEvent.change(await screen.findByLabelText(/IBAN/i), {target: {value: 'DE75512108001245126199'}});
-    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '100'}});
-    fireEvent.change(screen.getByLabelText(/Date/i), {target: {value: '11.10.2021'}}); // invalid value
-
-    fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
-
-    // Assert
-    expect(await screen.findByRole('form')).toHaveTextContent(('Date must be in the future'));
-  });
-
   it('should update transfer if validation passes', async () => {
     // Act
     await openModal();
 
     fireEvent.change(await screen.findByLabelText(/Account holder/i), {target: {value: 'new name'}});
+    fireEvent.change(await screen.findByLabelText(/Amount/i), {target: {value: '3.000,00'}});
     fireEvent.click(await screen.findByRole('button', {name: /Save/i}));
 
     // Assert
@@ -129,6 +74,7 @@ describe('Form submit button', () => {
 
     // check if transfer has been updated
     await waitFor(() => expect(screen.getByText('new name')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('3.000,00 €')).toBeInTheDocument());
 
     // check if notification has been triggered
     await waitFor(() => expect(screen.getByRole('notification'))
